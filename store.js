@@ -5,17 +5,18 @@ function Store(){
       pageThis = [];
 
   //重写page
-  Page = function Page(){
+  Page = function (){
     let pageOpitons = arguments.length > 0 ? arguments[0] : {},
-        onLoad = pageOpitons.onLoad;
+        onLoad = pageOpitons.onLoad;  //保存原来的onLoad，保证onLoad的正确执行
 
-    pageOpitons.onLoad = function(){
+    pageOpitons.onLoad = function(options){
+      //搜集页面对象
       pageThis.push(this);
+      //执行原来的onLoad
       onLoad && onLoad.call(this);
-      debugger;
     }
 
-    //原生的Page执行
+    //执行原来的Page
     originPage(pageOpitons);
   }
 
