@@ -16,6 +16,11 @@ function Store(){
       onLoad && onLoad.call(this);
     }
 
+    pageOpitons.onUnload = function(options){
+      pageThis.pop();
+      onUnload && onUnload.call(this);
+    }
+
     //执行原来的Page
     originPage(pageOpitons);
   }
