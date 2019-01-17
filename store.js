@@ -5,39 +5,29 @@ function Store(){
       pageThis = [],
       store = {};  //储存store
 
-  function _setData(options){
-    let _store = Object.assign(store, options);
+  function _setData(){
     this.setData({
-      $Store: _store
+      $Store: store
     });
   }
 
   //重写page
   Page = function (){
     let pageOpitons = arguments.length > 0 ? arguments[0] : {},
-        //onLoad = pageOpitons.onLoad,  //保存原来的onLoad，保证onLoad的正确执行
-        onShow = pageOpitons.onShow,
+        onLoad = pageOpitons.onLoad,  //保存原来的onLoad，保证onLoad的正确执行
         onUnload = pageOpitons.onUnload;
     
-    /*pageOpitons.onLoad = function(options){
+    pageOpitons.onLoad = function(options){
       //搜集页面对象
       pageThis.push(this);
       //执行原来的onLoad
       onLoad && onLoad.call(this);
-      _setData.call(this);
-    }*/
-    pageOpitons.onShow = function (options) {
-      //搜集页面对象
-      pageThis.push(this);
-      //执行原来的onLoad
-      onShow && onShow.call(this);
       _setData.call(this);
     }
 
     pageOpitons.onUnload = function(options){
       pageThis.pop();
       onUnload && onUnload.call(this);
-      console.log('_index: ', pageThis[pageThis.length - 1]);
       _setData.call(pageThis[pageThis.length - 1]);
     }
 
